@@ -69,7 +69,7 @@ function App() {
     // The question mark below shows that we are doing optional select means if passwordRef.current is empty then we do not select any thing 
     passwordRef.current?.select()
     window.navigator.clipboard.writeText(password) 
-  } , [ password] ) 
+  } , [ password])
 
 
 
