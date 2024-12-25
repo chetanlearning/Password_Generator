@@ -68,6 +68,8 @@ function App() {
   const copyToClipboard = useCallback( ()=>{
     // The question mark below shows that we are doing optional select means if passwordRef.current is empty then we do not select any thing 
     passwordRef.current?.select()
+    // Now if you want to select only text of some length then you can use setSelectionRange
+    passwordRef.current?.setSelectionRange(0,15)
     window.navigator.clipboard.writeText(password) 
   } , [ password])
 
