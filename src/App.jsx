@@ -1,4 +1,4 @@
-import { useCallback, useState , useEffect } from 'react'
+import { useCallback, useState , useEffect , useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -25,11 +25,11 @@ function App() {
     let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     if (numAllowed) {
-      str += "0123456789"
+      str += "00000111112222233333444445555566666777778888899999"
     }
 
     if (charAllowed) {
-      str += "%!#&+~$@"
+      str += "%%%%%%!!!!!#####&&&&&+++++~~~~~$$$$$@@@@@"
     }
 
     for (let i = 1; i <= length; i++) {
@@ -57,6 +57,22 @@ function App() {
   // To avoid it we can also remove pg from dependency of useEffect . 
   // So it is for re-run and Memoization 
 
+  // Copy to clip board function 
+  // useRef HOOK 
+  // The useRef Hook allows you to persist values between renders.
+  // It can be used to store a mutable value that does not cause a re-render when updated.
+  // It can be used to access a DOM element directly.
+
+  const passwordRef = useRef(null)  
+
+  const copyToClipboard = useCallback( ()=>{
+    // The question mark below shows that we are doing optional select means if passwordRef.current is empty then we do not select any thing 
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(password) 
+  } , [ password] ) 
+
+
+
   return (
     <>
       <div className=' w-full max-w-md mx-auto
@@ -69,8 +85,10 @@ function App() {
             className='outline-none text-white w-full mb-2 py-1 px-3 bg-violet-800 rounded-lg'
             placeholder='Password'
             readOnly
+            ref = {passwordRef}
           />
           <button
+            onClick={ copyToClipboard }
             className="outline-none bg-violet-800  text-white mx-1 mb-2 px-3 py-0.5 shrink-0 ">copy</button>
         </div>
         <div className='flex text-sm gap-x-2'>
